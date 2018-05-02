@@ -843,7 +843,316 @@ array element/.style = {
  \end{tikzpicture}
 \end{figure}
 
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+% para usar "exatamente aqui" H opção em figure
+\usepackage{float} 
+\usepackage{makeidx} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Source: http://en.wikibooks.org/wiki/LaTeX/Hyperlinks %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+%\usepackage[english]{babel}
 
+% for tkiz
+\usepackage{pgf,tikz}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{mindmap} 
+\usetikzlibrary{datavisualization}
+\usetikzlibrary{datavisualization.formats.functions}
+\usetikzlibrary{shapes.misc}
+\usetikzlibrary{calc}
+\usetikzlibrary{math}
+\usetikzlibrary{shapes.symbols}
+\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{patterns} 
+\usetikzlibrary{positioning}  % distancia nos below
+\usetikzlibrary{topaths} % loop edge
+\usetikzlibrary{decorations} 
+\usetikzlibrary{decorations.shapes}
+\usetikzlibrary{decorations.pathmorphing}
+\usetikzlibrary{decorations.text}
+\usepgflibrary{decorations.pathreplacing} \usepgflibrary{decorations.markings} 
+\usepgflibrary{decorations.footprints} 
+\usepgflibrary{decorations.fractals} 
+\usetikzlibrary{matrix} 
+\usetikzlibrary{intersections} 
+
+
+
+%
+%
+% Pacotes Xexéo
+%
+%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mdframed} % framed modules
+\usepackage{listings} % listagns de programas
+\newtheorem{theorem}{Teorema} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% definições
+
+\newcommand{\NN}{\mathbb{N}}              % Natural numbers
+\newcommand{\QQ}{\mathbb{Q}}              % Rationals
+\newcommand{\RR}{\mathbb{R}}              % Reals
+\newcommand{\ZZ}{\mathbb{Z}}              % Integers
+%\newcommand{\powerset}{\mathcal{P}}       % power set
+\newcommand{\setcomp}[1]{\overline{#1}}   % set complement
+\newcommand{\negate}{{\sim}}              % negation (logic)
+\newcommand{\xor}{\oplus}                 % xor
+\renewcommand{\implies}{\Rightarrow}      % shorter version of =>
+\renewcommand{\iff}{\Leftrightarrow}      % shorter <=>
+\newcommand{\powerset}{\raisebox{.15\baselineskip}{\Large\ensuremath{\wp}}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%% ACENTOS EM LSTLISTING
+%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%
+\lstset{language=Python,extendedchars=true,basicstyle=\ttfamily,inputencoding=utf8,
+            literate=%
+            {ã}{{\~{a}}}1
+            {á}{{\'{a}}}1
+            {â}{{\^{a}}}1
+            {à}{{\`{a}}}1
+            {é}{{\'{e}}}1
+            {è}{{\`{e}}}1
+            {ê}{{\^{e}}}1
+            {î}{{\^{i}}}1
+            {í}{{\'{i}}}1
+            {ô}{{\^{o}}}1
+            {ó}{{\'{o}}}1
+            {õ}{{\~{o}}}1
+            {û}{{\^{u}}}1
+            {ú}{{\'{u}}}1
+            {ç}{{\c{c}}}1
+            {Ç}{{\c{C}}}1
+            {Ã}{{\~{A}}}1
+            {À}{{\`{A}}}1
+            {Â}{{\^{A}}}1
+            {Á}{{\'{A}}}1
+            {É}{{\'{E}}}1
+            {Ê}{{\^{E}}}1
+            {Î}{{\^{I}}}1
+            {Í}{{\'{I}}}1
+            {Ó}{{\'{O}}}1
+            {Ô}{{\^{O}}}1
+            {Õ}{{\~{O}}}1
+            {Ú}{{\'{U}}}1
+            }
+
+
+% no figures after footnote
+\usepackage[bottom]{footmisc}
+
+%%%%%%%%%%%%%%%
+\renewcommand{\lstlistingname}{Programa}% Listing -> Algorithm
+\renewcommand{\lstlistlistingname}{Lista de \lstlistingname s}% List of Listings -> List of Algorithms
+% Define Language
+\lstdefinelanguage{IEC61131}
+{
+  % list of keywords
+  keywords={
+    FUNCTION_BLOCK,
+    VAR_INPUT,
+    REAL,
+    END_VAR,
+    VAR_OUTPUT,
+    FUZZIFY,
+    TERM,
+    END_FUZZIFY,
+    DEFUZZIFY,
+    METHOD:,
+    END_DEFUZZIFY,
+    RULEBLOCK,
+    AND, MIN, ACT, MAX, ACCU, IS,
+    ACCUM,
+    RULE,
+    IF, END,
+    THEN,
+    END_RULEBLOCK,
+    END_FUNCTION_BLOCK
+  },
+  sensitive=true, % keywords are  case-sensitive
+  columns=flexible,
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]" % defines that strings are enclosed in double quotes,
+  basicstyle=\scriptsize,
+    numbers=left, % show line numbers at the left
+  numberstyle=\tiny\ttfamily % style of the line numbers
+}
+
+\lstdefinelanguage{CLOUDSL}
+{
+  % list of keywords
+  keywords={
+  DATA,
+  TYPE,
+  VARINT,
+  IN,
+  AS,
+  AUTOMATIC,
+  VARSOLREAL,
+  TERM,
+  ALPHA,
+  CURVE,
+  TRIANGULAR,
+  CONCENTRATOR,
+  FACTOR,
+  HEDGE,
+  RULE,
+  IF,
+  AND,
+  THEN,
+  MODULE,
+  EVALUATION,
+  OUTPUT,
+  TO,
+  UNDECIDED,
+  UNDEFINED,
+  NULL,
+  NOINFO,
+  DILATION,
+  SELECT,
+  FROM,
+  TO,
+  WHERE,
+  WITH,
+  INTESIFICATION,
+  BEGIN,
+  END,
+  LOADMODEL,
+  BEGINMODEL,
+  ENDMODEL,
+  CREATE,
+  TABLE
+  FROM,
+  ARQTEXT,
+  ODBC,
+  GIS,
+  LINGTERM,
+  GAUSS,
+  TRAPEZ,
+  CUSTOM
+  CRISPVAR,
+  LIGVAR,
+  FUZZYVAR,
+  FZYNUMBER,
+  DOMAIN,
+  OVER,
+  OR,
+  NOT,
+  IS,
+  EXECMODEL,
+  EXEQUERY
+  },
+  sensitive=true, % keywords are  case-sensitive
+  columns=flexible,
+  morecomment=[l]{//}, % l is for line comment
+  morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+  morestring=[b]" % defines that strings are enclosed in double quotes,
+  basicstyle=\small\ttfamily,
+    numbers=left, % show line numbers at the left
+  numberstyle=\tiny\ttfamily % style of the line numbers
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% First page of book which contains 'stuff' like: %
+%  - Book title, subtitle                         %
+%  - Book author name                             %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\title{Testes}
+\author{Geraldo Xexéo}
+\date{July 2017}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{pythontex}
+\begin{document}
+ 
+
+
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+
+\draw  (0,0) rectangle (10,10) ;
+\draw  (1,1) rectangle (6,6);
+\draw  (4,4) rectangle (9,9);
+\draw (3,1) -- (9,7) ;
+
+\draw[dashed] (5,3) -- (6,3) ;
+\draw[dashed] (7,5) -- (7,4) ;
+
+\node at (0.1,9.5) [right] {Medidas Fuzzy};
+\node at (0.1,9) [right,align=left,font=\fontsize{5pt}{5pt}\selectfont]
+{monotônica e contínua \\ ou semicontínua};
+
+\node at (4,5.7) [right,align=left,font=\fontsize{8pt}{8pt}\selectfont] 
+{ Medidas de \\ Probabilidade};
+\node at (4,5.2) [right,align=left,font=\fontsize{5pt}{5pt}\selectfont]
+{aditiva};
+
+\node at (1,5.7)
+[right,align=left,font=\fontsize{8pt}{8pt}\selectfont] 
+{Medidas de Crença};
+\node at (1,5.2)
+[right,align=left,font=\fontsize{5pt}{5pt}\selectfont]
+{superaditiva e contínua \\ por cima };
+
+
+\node at (4,8.7)
+[right,align=left,font=\fontsize{8pt}{8pt}\selectfont]  
+{Medidas de Plausabilidade};
+\node at (4,8.2)
+[right,align=left,font=\fontsize{5pt}{5pt}\selectfont]
+{subaditiva e contínua \\ por baixo };
+
+\node at (7,4.5)
+[above right,align=left,font=\fontsize{8pt}{8pt}\selectfont]  
+{Medidas de \\ Necessidade};
+
+\node at (4,1.5)
+[above right,align=left,font=\fontsize{8pt}{8pt}\selectfont]  
+{Medidas de \\ Possibilidade};
+
+\node at (7,3)
+[right,align=left,font=\fontsize{8pt}{8pt}\selectfont] 
+{Nítido};
+
+\draw[->] (7,3) -- (6.5,4.3);
+\draw[->] (7,3) -- (5.7,3.5);
+
+
+
+
+\end{tikzpicture}
+
+
+    \caption{Klir e os tipos de medida}
+\end{figure}
+
+
+
+
+
+
+
+\end{document}
 
 
 \end{document}
